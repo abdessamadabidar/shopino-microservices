@@ -1,0 +1,17 @@
+spring:
+  config:
+    import: optional:configserver:localhost:8888
+
+  application:
+    name: order-service
+
+  cloud:
+    config:
+      discovery:
+        enabled: true
+        service-id: config-service
+
+server:
+  port: 8083
+
+

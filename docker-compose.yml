@@ -1,0 +1,131 @@
+
+services:
+  #################################### Discovery service #######################################
+  discovery-service:
+    build: ./services/discovery-service/
+    container_name: discovery-service
+    ports:
+      - '8761:8761'
+    expose:
+      - '8761'
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8761/actuator/health"]
+      interval: 20s
+      timeout: 5s
+      retries: 5
+      start_period: 30s
+    environment:
+      eureka.instance.hostname: discovery-service
+      eureka.client.serviceUrl.defaultZone: http://discovery-service:8761/eureka
+
+  #################################### Config service #######################################
+  config-service:
+    build: ./services/config-service/
+    container_name: config-service
+    ports:
+      - '8888:8888'
+    expose:
+      - '8888'
+    environment:
+      - SERVER_PORT=8888
+      - DISCOVERY_SERVICE_URL=http://discovery-service:8761/eureka
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8888/actuator/health"]
+      interval: 20s
+      timeout: 5s
+      retries: 5
+      start_period: 30s
+    depends_on:
+      discovery-service:
+        condition: service_healthy
+
+  #################################### Gateway service #######################################
+#  gateway-service:
+#    build: ./services/gateway-service/
+#    container_name: gateway-service
+#    ports:
+#      - '8000:8000'
+#    expose:
+#      - '8000'
+#    environment:
+#      server.port: 8000
+#      eureka.client.serviceUrl.defaultZone: http://discovery-service:8761/eureka
+#      spring.cloud.gateway.routes[0].id: customer-service
+#      spring.cloud.gateway.routes[0].uri: http://customer-service:8081
+#      spring.cloud.gateway.routes[0].predicates[0]: Path= /api/v1/customers/**
+#    healthcheck:
+#      test: [ "CMD", "curl", "-f", "http://localhost:8000/actuator/health" ]
+#      interval: 20s
+#      timeout: 5s
+#      retries: 5
+#      start_period: 30s
+#    depends_on:
+#      - config-service
+
+  #################################### Customer service #######################################
+#  customer-service:
+#    build: ./services/customer-service/
+#    container_name: customer-service
+#    ports:
+#      - '8081:8081'
+#    expose:
+#      - '8081'
+#    environment:
+#      server.port: 8081
+#      eureka.client.serviceUrl.defaultZone: http://discovery-service:8761/eureka
+#      spring.datasource.url: jdbc:postgresql://customer-service-db:5432/customer_service_db
+#    healthcheck:
+#      test: [ "CMD", "curl", "-f", "http://localhost:8081/actuator/health" ]
+#      interval: 20s
+#      timeout: 5s
+#      retries: 5
+#      start_period: 30s
+#    depends_on:
+#      - config-service
+#      - customer-service-db
+#
+#  customer-service-db:
+#    image: postgres
+#    container_name: customer-service-db
+#    ports:
+#      - '5432:5432'
+#    environment:
+#      POSTGRES_USER: abdessamad
+#      POSTGRES_DB: customer_service_db
+#      POSTGRES_PASSWORD: abdessamadabidar@xyz
+
+
+
+## Kafka Services
+#  zookeeper:
+#    image: confluentinc/cp-zookeeper:7.4.4
+#    environment:
+#      ZOOKEEPER_CLIENT_PORT: 2181
+#      ZOOKEEPER_TICK_TIME: 2000
+#    ports:
+#      - "22181:2181"
+#
+#  kafka:
+#    image: confluentinc/cp-kafka:7.4.4
+#    depends_on:
+#      - zookeeper
+#    ports:
+#      - "9092:9092"
+#    environment:
+#      KAFKA_BROKER_ID: 1
+#      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+#      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://localhost:9092
+#      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT
+#      KAFKA_INTER_BROKER_LISTENER_NAME: PLAINTEXT
+#      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+
+
+#  pgadmin:
+#    image: dpage/pgadmin4
+#    container_name: pgadmin-container
+#    ports:
+#      - "5050:80"
+#    environment:
+#      PGADMIN_DEFAULT_EMAIL: abdessamad.abidar@outlook.com
+#      PGADMIN_DEFAULT_PASSWORD: 1234
+
