@@ -7,6 +7,10 @@ pipeline {
         maven "maven"
     }
 
+    environment {
+        IMAGE_VERSION = 'micro-1.0.0'
+    }
+
     stages {
 
         stage("build Jar") {
@@ -21,6 +25,7 @@ pipeline {
             steps {
                 script {
                     dockerLogin()
+                    dockerBuild 'abdessamadabidar/shopino-microservices', "${IMAGE_VERSION}", 'services/config-service/'
                 }
             }
         }
