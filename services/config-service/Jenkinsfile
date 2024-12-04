@@ -9,10 +9,18 @@ pipeline {
 
     stages {
 
-        stage("build jar") {
+        stage("build Jar") {
             steps {
                 script {
                     buildJar 'config-service'
+                }
+            }
+        }
+
+        stage("build and push Image") {
+            steps {
+                script {
+                    dockerLogin()
                 }
             }
         }
