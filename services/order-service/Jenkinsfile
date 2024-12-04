@@ -6,6 +6,9 @@ pipeline {
     tools {
         maven "maven"
     }
+    environment {
+        IMAGE_VERSION = 'micro-1.0.0'
+    }
 
     stages {
 
@@ -17,6 +20,14 @@ pipeline {
             }
         }
 
-
+        stage("build and push Image") {
+            steps {
+                script {
+                    dockerLogin()
+                    dockerBuild 'abdessamadabidar/order-service', "${IMAGE_VERSION}", 'services/order-service/'
+                    dockerPush 'abdessamadabidar/order-service', "${IMAGE_VERSION}"
+                }
+            }
+        }
     }
 }

@@ -25,8 +25,8 @@ pipeline {
             steps {
                 script {
                     dockerLogin()
-                    dockerBuild 'abdessamadabidar/shopino-microservices', "${IMAGE_VERSION}", 'services/config-service/'
-                    dockerPush 'abdessamadabidar/shopino-microservices', "${IMAGE_VERSION}"
+                    dockerBuild 'abdessamadabidar/config-service', "${IMAGE_VERSION}", 'services/config-service/'
+                    dockerPush 'abdessamadabidar/config-service', "${IMAGE_VERSION}"
                 }
             }
         }
