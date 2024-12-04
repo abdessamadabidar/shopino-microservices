@@ -1,6 +1,4 @@
 #!user/bin/env groovy
-
-
 @Library('jenkins-shared-library')_
 
 pipeline {
@@ -14,7 +12,7 @@ pipeline {
         stage("build jar") {
             steps {
                 script {
-                    buildJar()
+                    buildJar 'config-service'
                 }
             }
         }
