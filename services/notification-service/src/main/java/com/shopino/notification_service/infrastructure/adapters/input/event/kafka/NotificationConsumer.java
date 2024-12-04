@@ -13,9 +13,12 @@ public class NotificationConsumer {
 
     private final PersistNotificationUseCase persistNotificationUseCase;
 
+
+
     @KafkaListener(
-            topics = {"order-topic"},
-            groupId = "notifications"
+            topics = {"order-topic", "payment-topic"},
+            groupId = "notifications",
+            id = "orderListener"
     )
     public void consume(OrderConfirmationNotification orderConfirmationNotification) {
         persistNotificationUseCase.persistOrderConfirmationNotification(orderConfirmationNotification);
@@ -23,8 +26,9 @@ public class NotificationConsumer {
 
 
     @KafkaListener(
-            topics = {"order-topic"},
-            groupId = "notifications"
+            topics = {"payment-topic"},
+            groupId = "notifications",
+            id = "paymentListener"
     )
     public void consume(PaymentRequestNotification paymentRequestNotification) {
         persistNotificationUseCase.persistPaymentRequestNotification(paymentRequestNotification);

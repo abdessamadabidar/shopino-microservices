@@ -16,7 +16,7 @@ import java.util.UUID;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-@Document
+@Document(collection = "order_notifications")
 public class OrderConfirmationNotification {
     @Id
     private String id;

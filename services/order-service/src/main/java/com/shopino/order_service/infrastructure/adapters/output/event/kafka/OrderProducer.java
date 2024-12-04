@@ -13,9 +13,7 @@ public class OrderProducer {
 
     private final KafkaTemplate<String, OrderConfirmationNotification> kafkaTemplate;
 
-
     public void sendOrderConfirmation(OrderConfirmationNotification orderConfirmationNotification) {
-        log.info(String.valueOf(orderConfirmationNotification));
-        kafkaTemplate.send("order-topic", orderConfirmationNotification.getOrderReference(), orderConfirmationNotification);
+        kafkaTemplate.send("order-topic", orderConfirmationNotification);
     }
 }

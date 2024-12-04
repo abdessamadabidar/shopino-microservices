@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 
 @FeignClient(
         name = "payment-service",
-        url = "http://localhost:8000/api/v1/payments"
+        url = "${openfeign.route.payments-url}"
 )
 @Component
 public interface PaymentClient {

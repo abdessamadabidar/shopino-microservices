@@ -1,0 +1,19 @@
+#!user/bin/env groovy
+pipeline {
+    agent any
+    tools {
+        maven "maven"
+    }
+
+    stages {
+        stage("build jar") {
+            steps {
+                script {
+
+                }
+            }
+        }
+
+
+    }
+}

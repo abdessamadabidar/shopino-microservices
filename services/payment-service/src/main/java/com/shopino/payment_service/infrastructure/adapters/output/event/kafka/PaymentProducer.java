@@ -15,7 +15,6 @@ public class PaymentProducer {
     private final KafkaTemplate<String, PaymentRequestNotification> kafkaTemplate;
 
     public void sendPaymentRequestNotification(PaymentRequestNotification paymentRequestNotification) {
-        log.info(String.valueOf(paymentRequestNotification));
-        kafkaTemplate.send("payment-topic", paymentRequestNotification.getOrderReference(), paymentRequestNotification);
+        kafkaTemplate.send("payment-topic", paymentRequestNotification);
     }
 }

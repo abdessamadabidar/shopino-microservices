@@ -173,7 +173,7 @@ public class OrderService implements
 
 
 
-            Thread.sleep(8000);
+            Thread.sleep(3000);
         }
 
 

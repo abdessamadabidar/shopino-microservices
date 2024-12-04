@@ -13,7 +13,7 @@ import java.util.UUID;
 
 @FeignClient(
         name = "customer-service",
-        url = "http://localhost:8000/api/v1/customers"
+        url = "${openfeign.route.customers-url}"
 )
 @Component
 public interface CustomerClient {
