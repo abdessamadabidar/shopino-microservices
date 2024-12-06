@@ -3,7 +3,7 @@
 
 pipeline {
     agent {
-        label 'any'
+        label any
         customWorkspace '/var/jenkins_home/workspace/shopino-microservices/services/'
     }
     tools {
