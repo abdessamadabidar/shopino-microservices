@@ -3,7 +3,7 @@
 
 pipeline {
     agent {
-        label '/var/jenkins_home/workspace/shopino-microservices/services/'
+        customWorkspace '/var/jenkins_home/workspace/shopino-microservices/services/'
     }
     tools {
         maven "maven"
