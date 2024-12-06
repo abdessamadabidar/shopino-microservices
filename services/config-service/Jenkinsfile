@@ -2,9 +2,7 @@
 @Library('jenkins-shared-library')_
 
 pipeline {
-    agent {
-        customWorkspace '/var/jenkins_home/workspace/shopino-microservices/services/'
-    }
+    agent any
     tools {
         maven "maven"
     }
