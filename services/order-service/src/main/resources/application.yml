@@ -1,4 +1,12 @@
 spring:
+  kafka:
+    producer:
+      bootstrap-servers: localhost:9092
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+    template:
+      default-topic: order-topic
+
   config:
     import: optional:configserver:localhost:8888
 
@@ -29,3 +37,8 @@ server:
   port: 8083
 
 
+openfeign:
+  route:
+    customers-url: http://localhost:8000/api/v1/customers
+    products-url: http://localhost:8000/api/v1/products
+    payments-url: http://localhost:8000/api/v1/payments
