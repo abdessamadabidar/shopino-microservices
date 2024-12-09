@@ -10,6 +10,11 @@ pipeline {
         IMAGE_VERSION = 'micro-1.0.0'
     }
 
+    parameters {
+        string(name: 'NexusHost', defaultValue: '0.0.0.0', description: 'Nexus Host where to deploy images and jars')
+        string(name: 'DockerRepositoryPort', defaultValue: '', description: 'Docker Hosted Repository Port')
+    }
+
     stages {
 
         stage("build jar") {
@@ -23,9 +28,9 @@ pipeline {
         stage("build and push Image") {
             steps {
                 script {
-                    dockerLogin()
-                    dockerBuild 'abdessamadabidar/discovery-service', "${IMAGE_VERSION}", 'services/discovery-service/'
-                    dockerPush 'abdessamadabidar/discovery-service', "${IMAGE_VERSION}"
+                    dockerLogin "${NexusHost}", "${DockerRepositoryPort}"
+                    dockerBuild "${NexusHost}", "${DockerRepositoryPort}", 'discovery-service', "${IMAGE_VERSION}", 'services/discovery-service/'
+                    dockerPush "${NexusHost}", "${DockerRepositoryPort}", 'discovery-service', "${IMAGE_VERSION}"
                 }
             }
         }

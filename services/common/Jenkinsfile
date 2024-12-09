@@ -7,12 +7,25 @@ pipeline {
         maven "maven"
     }
 
+    parameters {
+        string(name: 'NexusHost', defaultValue: '0.0.0.0', description: 'Nexus Host where to deploy images and jars')
+        string(name: 'DockerRepositoryPort', defaultValue: '', description: 'Docker Hosted Repository Port')
+    }
+
     stages {
 
         stage("install module") {
             steps {
                 script {
                     install 'common'
+                }
+            }
+        }
+
+        stage("deploy jar module") {
+            steps {
+                script {
+                    deploy "${NexusHost}", "${DockerRepositoryPort}", 'common'
                 }
             }
         }
