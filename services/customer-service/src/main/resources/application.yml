@@ -11,6 +11,21 @@ spring:
         enabled: true
         service-id: config-service
 
+  sql:
+    init:
+      mode: always
+  datasource:
+    url: jdbc:postgresql://localhost:5432/customer_service_db
+    username: abdessamad
+    password: abdessamadabidar@xyz
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+    generate-ddl: true
+    properties:
+      hibernate:
+        show_sql: true
+
 server:
   port: 8081
 
