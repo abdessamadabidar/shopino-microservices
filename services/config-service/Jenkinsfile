@@ -60,7 +60,7 @@ pipeline {
                 script {
                     def remote = [:]
                     remote.name = "ansible-server"
-                    remote.host = ${AnsibleHost}
+                    remote.host = "${AnsibleHost}" as String
                     remote.AllowAnyHosts = true
 
                     withCredentials([sshUserPrivateKey(credentialsId: "ansible-ssh-key", keyFileVariable: 'keyFile', userNameVariable: 'user')]) {
