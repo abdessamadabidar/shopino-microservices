@@ -1,0 +1,6 @@
+plugin: amazon.aws.aws_ec2
+regions:
+  - eu-west-3
+filters:
+  tag:Name: k8s-ec2
+  instance-state-name : running

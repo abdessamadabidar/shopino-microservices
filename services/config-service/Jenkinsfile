@@ -14,28 +14,40 @@ pipeline {
     parameters {
         string(name: 'NexusHost', defaultValue: '0.0.0.0', description: 'Nexus Host where to deploy images and jars')
         string(name: 'DockerRepositoryPort', defaultValue: '', description: 'Docker Hosted Repository Port')
+        string(name: 'AnsibleHost', defaultValue: '0.0.0.0', description: 'Ansible Host where execute deployment tasks')
     }
 
     stages {
 
-        stage("build Jar") {
+//        stage("build Jar") {
+//            steps {
+//                script {
+//                    buildJar 'config-service'
+//                }
+//            }
+//        }
+
+//        stage("build and push Image") {
+//            steps {
+//                script {
+//                    dockerLogin "${NexusHost}", "${DockerRepositoryPort}"
+//                    dockerBuild "${NexusHost}", "${DockerRepositoryPort}", 'config-service', "${IMAGE_VERSION}", 'services/config-service/'
+//                    dockerPush "${NexusHost}", "${DockerRepositoryPort}", 'config-service', "${IMAGE_VERSION}"
+//                }
+//            }
+//        }
+
+
+        stage("Copy Resources files to Ansible server") {
             steps {
                 script {
-                    buildJar 'config-service'
+                    echo "Copying all necessary files to ansible server"
+                    sh "mkdir ~/ansible_home"
+                    sh "scp -o StrictHostKeyChecking=no ansible/* abdessamadabidar@${ANSIBLE_HOST}:~/ansible_home"
+
                 }
             }
         }
-
-        stage("build and push Image") {
-            steps {
-                script {
-                    dockerLogin "${NexusHost}", "${DockerRepositoryPort}"
-                    dockerBuild "${NexusHost}", "${DockerRepositoryPort}", 'config-service', "${IMAGE_VERSION}", 'services/config-service/'
-                    dockerPush "${NexusHost}", "${DockerRepositoryPort}", 'config-service', "${IMAGE_VERSION}"
-                }
-            }
-        }
-
     }
 
     post {
