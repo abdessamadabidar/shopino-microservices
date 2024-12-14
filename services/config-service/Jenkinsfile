@@ -41,10 +41,11 @@ pipeline {
         stage("Copy Resources files to Ansible server") {
             steps {
                 script {
-                    echo "Copying all necessary files to ansible server"
-                    sh "mkdir -p ~/ansible_home"
-                    sh "scp -o StrictHostKeyChecking=no ansible/* abdessamadabidar@${ANSIBLE_HOST}:~/ansible_home"
-
+                    sshagent(['ansible-ssh-key']) {
+                        echo "Copying all necessary files to ansible server"
+                        sh "mkdir -p ~/ansible_home"
+                        sh "scp -o StrictHostKeyChecking=no ansible/* abdessamadabidar@${ANSIBLE_HOST}:~/ansible_home"
+                    }
                 }
             }
         }
