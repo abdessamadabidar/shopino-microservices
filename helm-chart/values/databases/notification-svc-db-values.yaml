@@ -1,0 +1,52 @@
+# Deployment
+
+applicationName: notification-service-db
+
+applicationReplicas: 1
+
+imageName: mongo
+
+imageVersion: 5.0
+
+containerPort: 27017
+
+imgPullPolicy: IfNotPresent
+
+containerSecretEnvVars:
+  - name: MONGO_INITDB_ROOT_USERNAME
+    secretName: notification-service-db-secret
+    key: mongo-root-username
+  - name: MONGO_INITDB_ROOT_PASSWORD
+    secretName: notification-service-db-secret
+    key: mongo-root-password
+  - name: MONGO_INITDB_DATABASE
+    secretName: notification-service-db-secret
+    key: mongo-db
+
+# Service
+
+serviceType: ClusterIP
+
+serviceName: notification-service-db
+
+servicePort: 27017
+
+
+# Secret
+
+mongoUsername: abdessamad
+
+mongoPassword: abdessamadpwd
+
+mongoRootUsername: abdessamad
+
+mongoRootPassword: abdessamadpwd
+
+mongoDatabaseName: notification_service_db
+
+
+# ConfigMap
+
+mongoAuthDatabase: admin
+
+mongoHost: notification-service-db

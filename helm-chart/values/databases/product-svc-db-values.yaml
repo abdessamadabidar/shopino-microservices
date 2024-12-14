@@ -1,0 +1,43 @@
+# Deployment
+
+applicationName: product-service-db
+
+applicationReplicas: 1
+
+imageName: postgres
+
+imageVersion: latest
+
+containerPort: 5432
+
+imgPullPolicy: IfNotPresent
+
+containerSecretEnvVars:
+  - name: POSTGRES_USER
+    secretName: product-service-db-secret
+    key: postgres-username
+  - name: POSTGRES_PASSWORD
+    secretName: product-service-db-secret
+    key: postgres-password
+  - name: POSTGRES_DB
+    secretName: product-service-db-secret
+    key: postgres-db
+
+# Service
+
+serviceType: ClusterIP
+
+serviceName: product-service-db
+
+servicePort: 5432
+
+
+# Secret
+
+postgresUsername: abdessamad
+
+postgresPassword: abdessamadpwd
+
+databaseName: product_service_db
+
+

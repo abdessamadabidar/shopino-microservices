@@ -1,0 +1,50 @@
+# Deployment
+
+applicationName: customer-service
+
+applicationReplicas: 1
+
+containerPort: 8081
+
+imageName: nexus.local:8083/customer-service
+
+imageVersion: micro-1.0.0
+
+containerEnvVars:
+  - name: eureka.client.serviceUrl.defaultZone
+    value: http://discovery-service:5761/eureka
+  - name: management.zipkin.tracing.endpoint
+    value: http://zipkin:9411/api/v2/spans
+  - name: spring.cloud.config.import-check.enabled
+    value: false
+
+containerConfigEnvVars:
+  - name: spring.datasource.url
+    configName: customer-service-configmap
+    key: postgres_database_url
+
+containerSecretEnvVars:
+  - name: spring.datasource.username
+    secretName: customer-service-secret
+    key: postgres-username
+  - name: spring.datasource.password
+    secretName: customer-service-secret
+    key:  postgres-password
+
+databaseName: customer_service_db
+
+databaseHost: customer-service-db
+
+databasePort: 5432
+
+postgresUsername: abdessamad
+
+postgresPassword: abdessamadpwd
+
+# service
+
+serviceName: customer-service
+
+serviceType: ClusterIP
+
+servicePort: 5051

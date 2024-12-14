@@ -1,0 +1,81 @@
+releases:
+  - name: zipkin
+    chart: ./helm-chart
+    values:
+      - ./helm-chart/values/zipkin/zipkin-values.yaml
+
+  - name: zookeeper
+    chart: ./helm-chart
+    values:
+      - ./helm-chart/values/kafka/zookeeper-values.yaml
+
+  - name: kafka
+    chart: ./helm-chart
+    values:
+      - ./helm-chart/values/kafka/kafka-values.yaml
+
+  - name: customer-service-db
+    chart: ./helm-chart
+    values:
+      - ./helm-chart/values/databases/customer-svc-db-values.yaml
+
+  - name: product-service-db
+    chart: ./helm-chart
+    values:
+      - ./helm-chart/values/databases/product-svc-db-values.yaml
+
+  - name: payment-service-db
+    chart: ./helm-chart
+    values:
+      - ./helm-chart/values/databases/payment-svc-db-values.yaml
+
+  - name: order-service-db
+    chart: ./helm-chart
+    values:
+      - ./helm-chart/values/databases/order-svc-db-values.yaml
+
+  - name: notification-service-db
+    chart: ./helm-chart
+    values:
+      - ./helm-chart/values/databases/notification-svc-db-values.yaml
+
+  - name: discovery-service
+    chart: ./helm-chart
+    values:
+      - ./helm-chart/values/services/discovery-svc-values.yaml
+
+  - name: config-service
+    chart: ./helm-chart
+    values:
+      - ./helm-chart/values/services/config-svc-values.yaml
+      - githubPublicAccessToken : {{ requiredEnv "GITHUB_PUBLIC_ACCESS_TOKEN" }}
+
+  - name: gateway-service
+    chart: ./helm-chart
+    values:
+      - ./helm-chart/values/services/gateway-svc-values.yaml
+
+  - name: customer-service
+    chart: ./helm-chart
+    values:
+      - ./helm-chart/values/services/customer-svc-values.yaml
+
+  - name: product-service
+    chart: ./helm-chart
+    values:
+      - ./helm-chart/values/services/product-svc-values.yaml
+
+  - name: payment-service
+    chart: ./helm-chart
+    values:
+      - ./helm-chart/values/services/payment-svc-values.yaml
+
+  - name: notification-service
+    chart: ./helm-chart
+    values:
+      - ./helm-chart/values/services/notification-svc-values.yaml
+
+  - name: order-service
+    chart: ./helm-chart
+    values:
+      - ./helm-chart/values/services/order-svc-values.yaml

@@ -1,0 +1,30 @@
+# Deployment
+
+applicationName: zookeeper
+
+applicationReplicas: 1
+
+imageName: confluentinc/cp-zookeeper
+
+imageVersion: 7.4.4
+
+containerPort: 2181
+
+imgPullPolicy: IfNotPresent
+
+
+containerEnvVars:
+  - name: ZOOKEEPER_CLIENT_PORT
+    value: 2181
+  - name: ZOOKEEPER_TICK_TIME
+    value: 2000
+
+# Service
+
+serviceType: ClusterIP
+
+serviceName: zookeeper
+
+servicePort: 2181
+
+

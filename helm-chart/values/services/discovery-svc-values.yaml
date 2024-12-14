@@ -1,0 +1,31 @@
+applicationName: discovery-service
+
+applicationReplicas: 1
+
+imageName: nexus.local:8083/discovery-service
+
+imageVersion: micro-1.0.0
+
+containerPort: 8761
+
+containerEnvVars:
+  - name: eureka.instance.hostname
+    value: discovery-service
+  - name: eureka.client.serviceUrl.defaultZone
+    value: http://discovery-service:5761/eureka
+  - name: management.zipkin.tracing.endpoint
+    value: http://zipkin:9411/api/v2/spans
+
+imgPullSecrets: regcred
+
+
+# Service
+serviceType: NodePort
+
+serviceName: discovery-service
+
+servicePort: 5761
+
+nodePort: 30001
+
+

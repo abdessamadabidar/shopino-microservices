@@ -1,0 +1,38 @@
+# Deployment
+
+applicationName: kafka
+
+applicationReplicas: 1
+
+imageName: confluentinc/cp-kafka
+
+imageVersion: 7.4.4
+
+containerPort: 9092
+
+imgPullPolicy: IfNotPresent
+
+
+containerEnvVars:
+  - name: KAFKA_BROKER_ID
+    value: 1
+  - name: KAFKA_ZOOKEEPER_CONNECT
+    value: zookeeper:2181
+  - name: KAFKA_ADVERTISED_LISTENERS
+    value: PLAINTEXT://kafka-service:9092
+  - name: KAFKA_LISTENER_SECURITY_PROTOCOL_MAP
+    value: PLAINTEXT:PLAINTEXT
+  - name: KAFKA_INTER_BROKER_LISTENER_NAME
+    value: PLAINTEXT
+  - name: KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR
+    value: 1
+
+# Service
+
+serviceType: ClusterIP
+
+serviceName: kafka-service
+
+servicePort: 9092
+
+

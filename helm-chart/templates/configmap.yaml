@@ -1,0 +1,8 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: "{{ .Values.applicationName }}-configmap"
+data:
+  postgres_database_url: "jdbc:postgresql://{{ .Values.databaseHost }}:{{ .Values.databasePort }}/{{ .Values.databaseName }}"
+  authentication-database: "{{ .Values.mongoAuthDatabase }}"
+  mongodb_host: "{{ .Values.mongoHost }}"

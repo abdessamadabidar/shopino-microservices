@@ -1,0 +1,21 @@
+applicationName: zipkin
+
+applicationReplicas: 1
+
+imageName: openzipkin/zipkin
+
+imageVersion: latest
+
+containerPort: 9411
+
+imgPullPolicy: IfNotPresent
+
+# Service
+
+serviceType: NodePort
+
+serviceName: zipkin
+
+servicePort: 9411
+
+nodePort: 30004

@@ -1,0 +1,35 @@
+applicationName: config-service
+
+applicationReplicas: 1
+
+imageName: nexus.local:8083/config-service
+
+imageVersion: micro-1.0.0
+
+containerPort: 8888
+
+containerEnvVars:
+  - name: eureka.client.serviceUrl.defaultZone
+    value: http://discovery-service:5761/eureka
+  - name: management.zipkin.tracing.endpoint
+    value: http://zipkin:9411/api/v2/spans
+
+containerSecretEnvVars:
+  - name: spring.cloud.config.server.git.password
+    secretName: config-service-secret
+    key: github-public-access-token
+
+
+githubPublicAccessToken: ""
+
+imgPullSecrets: regcred
+
+
+# Service
+serviceType: NodePort
+
+serviceName: config-service
+
+servicePort: 5555
+
+nodePort: 30002

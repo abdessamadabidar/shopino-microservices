@@ -1,0 +1,61 @@
+applicationName: gateway-service
+
+applicationReplicas: 1
+
+imageName: nexus.local:8083/gateway-service
+
+imageVersion: micro-1.0.0
+
+containerPort: 8000
+
+containerEnvVars:
+  - name: eureka.instance.hostname
+    value: discovery-service
+  - name: eureka.client.serviceUrl.defaultZone
+    value: http://discovery-service:5761/eureka
+  - name: management.zipkin.tracing.endpoint
+    value: http://zipkin:9411/api/v2/spans
+  - name: spring.cloud.config.import-check.enabled
+    value: false
+  - name: SPRING_CLOUD_GATEWAY_ROUTES__0__ID
+    value: customer-service
+  - name: SPRING_CLOUD_GATEWAY_ROUTES__0__URI
+    value: http://customer-service:5051
+  - name: SPRING_CLOUD_GATEWAY_ROUTES__0__PREDICATES__0__
+    value: Path=/api/v1/customers/**
+  - name: SPRING_CLOUD_GATEWAY_ROUTES__1__ID
+    value: product-service
+  - name: SPRING_CLOUD_GATEWAY_ROUTES__1__URI
+    value: http://product-service:5052
+  - name: SPRING_CLOUD_GATEWAY_ROUTES__1__PREDICATES__0__
+    value: Path=/api/v1/products/**
+  - name: SPRING_CLOUD_GATEWAY_ROUTES__2__ID
+    value: order-service
+  - name: SPRING_CLOUD_GATEWAY_ROUTES__2__URI
+    value: http://order-service:5053
+  - name: SPRING_CLOUD_GATEWAY_ROUTES__2__PREDICATES__0__
+    value: Path=/api/v1/orders/**
+  - name: SPRING_CLOUD_GATEWAY_ROUTES__3__ID
+    value: payment-service
+  - name: SPRING_CLOUD_GATEWAY_ROUTES__3__URI
+    value: http://payment-service:5054
+  - name: SPRING_CLOUD_GATEWAY_ROUTES__3__PREDICATES__0__
+    value: Path=/api/v1/payments/**
+  - name: SPRING_CLOUD_GATEWAY_ROUTES__4__ID
+    value: notification-service
+  - name: SPRING_CLOUD_GATEWAY_ROUTES__4__URI
+    value: http://notification-service:5055
+  - name: SPRING_CLOUD_GATEWAY_ROUTES__4__PREDICATES__0__
+    value: Path=/api/v1/notifications/**
+
+
+imgPullSecrets: regcred
+
+# Service
+serviceType: NodePort
+
+serviceName: gateway-service
+
+servicePort: 5000
+
+nodePort: 30003

@@ -1,0 +1,43 @@
+# Deployment
+
+applicationName: payment-service-db
+
+applicationReplicas: 1
+
+imageName: postgres
+
+imageVersion: latest
+
+containerPort: 5432
+
+imgPullPolicy: IfNotPresent
+
+containerSecretEnvVars:
+  - name: POSTGRES_USER
+    secretName: payment-service-db-secret
+    key: postgres-username
+  - name: POSTGRES_PASSWORD
+    secretName: payment-service-db-secret
+    key: postgres-password
+  - name: POSTGRES_DB
+    secretName: payment-service-db-secret
+    key: postgres-db
+
+# Service
+
+serviceType: ClusterIP
+
+serviceName: payment-service-db
+
+servicePort: 5432
+
+
+# Secret
+
+postgresUsername: "abdessamad"
+
+postgresPassword: "abdessamadpwd"
+
+databaseName: "payment_service_db"
+
+

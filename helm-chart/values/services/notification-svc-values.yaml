@@ -1,0 +1,56 @@
+# Deployment
+
+applicationName: notification-service
+
+applicationReplicas: 1
+
+containerPort: 8085
+
+imageName: nexus.local:8083/notification-service
+
+imageVersion: micro-1.0.0
+
+containerEnvVars:
+  - name: eureka.client.serviceUrl.defaultZone
+    value: http://discovery-service:5761/eureka
+  - name: management.zipkin.tracing.endpoint
+    value: http://zipkin:9411/api/v2/spans
+  - name: spring.cloud.config.import-check.enabled
+    value: false
+  - name: spring.kafka.consumer.bootstrap-servers
+    value: http://kafka-service:9092
+
+containerConfigEnvVars:
+  - name: spring.data.mongodb.host
+    configName: notification-service-configmap
+    key: mongodb_host
+  - name: spring.data.mongodb.authentication-database
+    configName: notification-service-configmap
+    key: authentication-database
+
+containerSecretEnvVars:
+  - name: spring.data.mongodb.username
+    secretName: notification-service-secret
+    key: mongo-username
+  - name: spring.data.mongodb.password
+    secretName: notification-service-secret
+    key:  mongo-password
+
+
+mongoDatabaseName: notification_service_db
+
+mongoUsername: abdessamad
+
+mongoPassword: abdessamadpwd
+
+mongoAuthDatabase: admin
+
+mongoHost: notification-service-db
+
+# service
+
+serviceName: notification-service
+
+serviceType: ClusterIP
+
+servicePort: 5055

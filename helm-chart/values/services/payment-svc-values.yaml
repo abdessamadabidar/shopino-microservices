@@ -1,0 +1,52 @@
+# Deployment
+
+applicationName: payment-service
+
+applicationReplicas: 1
+
+containerPort: 8084
+
+imageName: nexus.local:8083/payment-service
+
+imageVersion: micro-1.0.0
+
+containerEnvVars:
+  - name: eureka.client.serviceUrl.defaultZone
+    value: http://discovery-service:5761/eureka
+  - name: management.zipkin.tracing.endpoint
+    value: http://zipkin:9411/api/v2/spans
+  - name: spring.cloud.config.import-check.enabled
+    value: false
+  - name: spring.kafka.producer.bootstrap-servers
+    value: http://kafka-service:9092
+
+containerConfigEnvVars:
+  - name: spring.datasource.url
+    configName: payment-service-configmap
+    key: postgres_database_url
+
+containerSecretEnvVars:
+  - name: spring.datasource.username
+    secretName: payment-service-secret
+    key: postgres-username
+  - name: spring.datasource.password
+    secretName: payment-service-secret
+    key:  postgres-password
+
+databaseName: payment_service_db
+
+databaseHost: payment-service-db
+
+databasePort: 5432
+
+postgresUsername: abdessamad
+
+postgresPassword: abdessamadpwd
+
+# service
+
+serviceName: payment-service
+
+serviceType: ClusterIP
+
+servicePort: 5054
