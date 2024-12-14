@@ -42,9 +42,13 @@ pipeline {
             steps {
                 script {
                     sshagent(['ansible-ssh-key']) {
-                        echo "Copying all necessary files to ansible server"
-                        sh "mkdir -p ~/ansible_home"
-                        sh "scp -o StrictHostKeyChecking=no ansible/* abdessamadabidar@${AnsibleHost}:~/ansible_home"
+                        sh """
+                            mkdir -p ~/ansible_home
+                            mkdir -p ~/helm
+                            scp -o StrictHostKeyChecking=no ansible/* abdessamadabidar@${AnsibleHost}:~/ansible_home
+                            scp -o StrictHostKeyChecking=no ./helm-chart abdessamadabidar@${AnsibleHost}:~/helm
+                            scp -o StrictHostKeyChecking=no ./helmfile.yaml abdessamadabidar@${AnsibleHost}:~/helm
+                        """
                     }
                 }
             }
@@ -54,6 +58,7 @@ pipeline {
     post {
         always {
             cleanWs()
+            
         }
     }
 }
