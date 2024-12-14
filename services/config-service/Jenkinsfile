@@ -66,8 +66,7 @@ pipeline {
 
                     withCredentials([sshUserPrivateKey(credentialsId: "ansible-ssh-key", keyFileVariable: 'keyFile')]) {
                         remote.identityFile = keyFile
-                        sshCommand remote: remote, command: "cd ~/ansible_home"
-                        sshCommand remote: remote, command: "ansible-playbook ping-playbook.yaml"
+                        sshCommand remote: remote, command: "ansible-playbook ~/ansible_home/ping-playbook.yaml"
                     }
                 }
             }
