@@ -1,0 +1,18 @@
+---
+- name: Deploy Helm chart and helmfile to EC2
+  hosts: aws_ec2
+  become: true
+  tasks:
+    - name: Creates a destination directory
+      ansible.builtin.file:
+        path: ~/helm
+        state: directory
+
+    - name: Copy file with owner and permissions
+      ansible.builtin.copy:
+        src: ~/helm
+        dest: ~/helm
+        owner: ubuntu
+        group: ubuntu
+        mode: '0644'
+
