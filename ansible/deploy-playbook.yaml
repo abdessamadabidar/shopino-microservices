@@ -5,27 +5,31 @@
   tasks:
     - name: Creates a destination directory
       ansible.builtin.file:
-        path: ~/helm
+        path: /home/ubuntu/helm
         state: directory
+        owner: ubuntu
+        group: ubuntu
+        mode: '0755'
 
     - name: Copy the Nexus DNS Script to EC2
       ansible.builtin.copy:
-        src: ~/nexus_dns.sh
-        dest: ~/nexus_dns.sh
+        src: ./nexus_dns.sh
+        dest: /home/ubuntu/nexus_dns.sh
         owner: ubuntu
         group: ubuntu
-        mode: '0644'
+        mode: '0755'
 
-    - name: Run Helm commands on EC2
+    - name: Run Nexus DNS Script on EC2
       ansible.builtin.shell: |
         ./nexus_dns.sh '1.1.1.1'
       args:
+        chdir: /home/ubuntu
+      become_user: ubuntu
 
-    - name: Copy file with owner and permissions
+    - name: Copy Helm directory to EC2
       ansible.builtin.copy:
-        src: ~/helm
-        dest: ~/helm
+        src: ./helm
+        dest: /home/ubuntu/helm
         owner: ubuntu
         group: ubuntu
-        mode: '0644'
-
+        mode: '0755'
