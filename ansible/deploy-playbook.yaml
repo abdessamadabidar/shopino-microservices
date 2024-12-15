@@ -13,7 +13,7 @@
 
     - name: Copy the Nexus DNS Script to EC2
       ansible.builtin.copy:
-        src: /home/abdessamadabidar/nexus_dns.sh
+        src: ~/nexus_dns.sh
         dest: /home/ubuntu/nexus_dns.sh
         remote_src: true
         owner: ubuntu
@@ -29,8 +29,8 @@
 
     - name: Copy Helm directory to EC2
       ansible.builtin.copy:
-        src: /home/abdessamadabidar/helm
-        dest: /home/ubuntu/helm
+        src: /home/abdessamadabidar/helm/
+        dest: /home/ubuntu/helm/
         owner: ubuntu
         group: ubuntu
         mode: '0755'
