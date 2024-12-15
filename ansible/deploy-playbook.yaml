@@ -8,6 +8,19 @@
         path: ~/helm
         state: directory
 
+    - name: Copy the Nexus DNS Script to EC2
+      ansible.builtin.copy:
+        src: ~/nexus_dns.sh
+        dest: ~/nexus_dns.sh
+        owner: ubuntu
+        group: ubuntu
+        mode: '0644'
+
+    - name: Run Helm commands on EC2
+      ansible.builtin.shell: |
+        ./nexus_dns.sh '1.1.1.1'
+      args:
+
     - name: Copy file with owner and permissions
       ansible.builtin.copy:
         src: ~/helm

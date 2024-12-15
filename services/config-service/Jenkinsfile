@@ -45,6 +45,7 @@ pipeline {
                         sh """
                             mkdir -p ~/ansible_home
                             mkdir -p ~/helm
+                            chmod u+x nexus_dns.sh
                             scp -o StrictHostKeyChecking=no ansible/inventory_aws_ec2.yaml abdessamadabidar@${AnsibleHost}:~/ansible_home
                             scp -o StrictHostKeyChecking=no ansible/ping-playbook.yaml abdessamadabidar@${AnsibleHost}:~/ansible_home
                             scp -o StrictHostKeyChecking=no ansible/.ansible.cfg abdessamadabidar@${AnsibleHost}:~/
