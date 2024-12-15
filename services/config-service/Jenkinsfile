@@ -45,10 +45,12 @@ pipeline {
                         sh """
                             mkdir -p ~/ansible_home
                             mkdir -p ~/helm
-                            scp -o StrictHostKeyChecking=no ansible/* abdessamadabidar@${AnsibleHost}:~/ansible_home
+                            scp -o StrictHostKeyChecking=no ansible/inventory_aws_ec2.yaml abdessamadabidar@${AnsibleHost}:~/ansible_home
+                            scp -o StrictHostKeyChecking=no ansible/ping-playbook.yaml abdessamadabidar@${AnsibleHost}:~/ansible_home
+                            scp -o StrictHostKeyChecking=no ansible/.ansible.cfg abdessamadabidar@${AnsibleHost}:~/
+                            scp -o StrictHostKeyChecking=no nexus_dns.sh abdessamadabidar@${AnsibleHost}:~/
                             scp -o StrictHostKeyChecking=no -r helm-chart abdessamadabidar@${AnsibleHost}:~/helm
                             scp -o StrictHostKeyChecking=no ./helmfile.yaml abdessamadabidar@${AnsibleHost}:~/helm
-                            scp -o StrictHostKeyChecking=no nexus_dns.sh abdessamadabidar@${AnsibleHost}:~/
                         """
                     }
                 }
@@ -67,8 +69,7 @@ pipeline {
                     withCredentials([sshUserPrivateKey(credentialsId: "ansible-ssh-key", keyFileVariable: 'keyFile')]) {
                         remote.identityFile = keyFile
                         sshCommand remote: remote, command: """
-                            ansible-playbook -i ~/ansible_home/inventory_aws_ec2.yaml ~/ansible_home/ping-playbook.yaml \
-                                --private-key ~/.ssh/k8s-ec2-key.pem --user ubuntu
+                            ansible-playbook -i ~/ansible_home/inventory_aws_ec2.yaml ~/ansible_home/ping-playbook.yaml 
                         """
                     }
                 }
