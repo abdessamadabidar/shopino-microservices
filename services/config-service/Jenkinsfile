@@ -43,8 +43,10 @@ pipeline {
                 script {
                     sshagent(['ansible-ssh-key']) {
                         sh """
-                            mkdir -p ~/ansible_home ~/helm/helm-chart/
+                            ssh abdessamadabidar@${AnsibleHost} 'mkdir -p ~/ansible_home ~/helm/helm-chart/'
                             chmod u+x nexus_dns.sh
+                        """
+                        sh """
                             scp -o StrictHostKeyChecking=no ansible/inventory_aws_ec2.yaml abdessamadabidar@${AnsibleHost}:~/ansible_home/
                             scp -o StrictHostKeyChecking=no ansible/ping-playbook.yaml abdessamadabidar@${AnsibleHost}:~/ansible_home/
                             scp -o StrictHostKeyChecking=no ansible/deploy-playbook.yaml abdessamadabidar@${AnsibleHost}:~/ansible_home/
