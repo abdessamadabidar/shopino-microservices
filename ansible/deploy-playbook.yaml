@@ -37,7 +37,7 @@
 
     - name: Run helm chart on EC2 server
       ansible.builtin.shell: |
-        cd ~/helm && helmfile sync
+        cd /home/ubuntu/helm && helmfile sync
       become: true
       environment:
         KUBECONFIG: /home/ubuntu/.kube/config
