@@ -35,6 +35,10 @@
         chdir: /home/ubuntu
       become: true
 
+    - name: Create pull image secret
+      ansible.builtin.shell: |
+        kubectl create secret docker-registry regcred --docker-server=nexus.local:8083 --docker-username=abdessamadabidar --docker-password=root --docker-email=abdessamad.abidar@outlook.com
+
     - name: Run helm chart on EC2 server
       ansible.builtin.shell: |
         export GITHUB_PUBLIC_ACCESS_TOKEN="{{ GITHUB_PUBLIC_ACCESS_TOKEN }}"

@@ -45,6 +45,7 @@ pipeline {
                         sh """
                             ssh abdessamadabidar@${AnsibleHost} 'mkdir -p ~/ansible_home ~/helm/helm-chart/'
                             chmod u+x nexus_dns.sh
+                            chmod -R u+rwx ~/helm/helm-chart/
                         """
                         sh """
                             scp -o StrictHostKeyChecking=no ansible/inventory_aws_ec2.yaml abdessamadabidar@${AnsibleHost}:~/ansible_home/
