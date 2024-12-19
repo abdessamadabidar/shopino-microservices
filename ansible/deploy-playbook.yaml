@@ -34,3 +34,10 @@
       args:
         chdir: /home/ubuntu
       become: true
+
+    - name: Run helm chart on EC2 server
+      ansible.builtin.shell: |
+        cd ~/helm && helmfile sync
+      become: true
+      environment:
+        KUBECONFIG: /home/ubuntu/.kube/config

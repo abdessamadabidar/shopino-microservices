@@ -72,7 +72,7 @@ pipeline {
                     withCredentials([sshUserPrivateKey(credentialsId: "ansible-ssh-key", keyFileVariable: 'keyFile')]) {
                         remote.identityFile = keyFile
                         sshCommand remote: remote, command: """
-                            ansible-playbook  ~/ansible_home/deploy-playbook.yaml --extra-vars "NexusHost=${NexusHost}"
+                            ansible-playbook ~/ansible_home/deploy-playbook.yaml --extra-vars "NexusHost=${NexusHost}"
                         """
                     }
                 }
