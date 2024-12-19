@@ -69,10 +69,13 @@ pipeline {
                     remote.host = "${AnsibleHost}" as String
                     remote.allowAnyHosts = true
 
-                    withCredentials([sshUserPrivateKey(credentialsId: "ansible-ssh-key", keyFileVariable: 'keyFile')]) {
+                    withCredentials([
+                            sshUserPrivateKey(credentialsId: "ansible-ssh-key", keyFileVariable: 'keyFile'),
+                            string(credentialsId: "GITHUB_PUBLIC_ACCESS_TOKEN", variable: 'GITHUB_TOKEN')
+                    ]) {
                         remote.identityFile = keyFile
                         sshCommand remote: remote, command: """
-                            ansible-playbook ~/ansible_home/deploy-playbook.yaml --extra-vars "NexusHost=${NexusHost}"
+                            ansible-playbook ~/ansible_home/deploy-playbook.yaml --extra-vars "NexusHost=${NexusHost} GITHUB_PUBLIC_ACCESS_TOKEN=${GITHUB_TOKEN}"
                         """
                     }
                 }

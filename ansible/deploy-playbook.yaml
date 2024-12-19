@@ -41,3 +41,4 @@
       become: true
       environment:
         KUBECONFIG: /home/ubuntu/.kube/config
+        GITHUB_PUBLIC_ACCESS_TOKEN: {{ GITHUB_PUBLIC_ACCESS_TOKEN }}
