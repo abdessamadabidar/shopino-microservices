@@ -21,7 +21,7 @@ pipeline {
         stage("deploy jar module") {
             steps {
                 script {
-                    deploy 'common'
+                    deployJar 'common'
                 }
             }
         }
