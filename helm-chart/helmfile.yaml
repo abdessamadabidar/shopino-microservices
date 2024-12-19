@@ -1,0 +1,81 @@
+releases:
+  - name: zipkin
+    chart: .
+    values:
+      - ./values/zipkin/zipkin-values.yaml
+
+  - name: zookeeper
+    chart: .
+    values:
+      - ./values/kafka/zookeeper-values.yaml
+
+  - name: kafka
+    chart: .
+    values:
+      - ./values/kafka/kafka-values.yaml
+
+  - name: customer-service-db
+    chart: .
+    values:
+      - ./values/databases/customer-svc-db-values.yaml
+
+  - name: product-service-db
+    chart: .
+    values:
+      - ./values/databases/product-svc-db-values.yaml
+
+  - name: payment-service-db
+    chart: .
+    values:
+      - ./values/databases/payment-svc-db-values.yaml
+
+  - name: order-service-db
+    chart: .
+    values:
+      - ./values/databases/order-svc-db-values.yaml
+
+  - name: notification-service-db
+    chart: .
+    values:
+      - ./values/databases/notification-svc-db-values.yaml
+
+  - name: discovery-service
+    chart: .
+    values:
+      - ./values/services/discovery-svc-values.yaml
+
+  - name: config-service
+    chart: .
+    values:
+      - ./values/services/config-svc-values.yaml
+      - githubPublicAccessToken : "{{ requiredEnv \"GITHUB_PUBLIC_ACCESS_TOKEN\" }}"
+
+  - name: gateway-service
+    chart: .
+    values:
+      - ./values/services/gateway-svc-values.yaml
+
+  - name: customer-service
+    chart: .
+    values:
+      - ./values/services/customer-svc-values.yaml
+
+  - name: product-service
+    chart: .
+    values:
+      - ./values/services/product-svc-values.yaml
+
+  - name: payment-service
+    chart: .
+    values:
+      - ./values/services/payment-svc-values.yaml
+
+  - name: notification-service
+    chart: .
+    values:
+      - ./values/services/notification-svc-values.yaml
+
+  - name: order-service
+    chart: .
+    values:
+      - ./values/services/order-svc-values.yaml
