@@ -33,4 +33,4 @@
         ./nexus_dns.sh '1.1.1.1'
       args:
         chdir: /home/ubuntu
-      become_user: ubuntu
+      become: true
