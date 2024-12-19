@@ -13,8 +13,8 @@
 
     - name: Copy the Nexus DNS Script to EC2
       ansible.builtin.copy:
-        src: ~/nexus_dns.sh
-        dest: /home/ubuntu/nexus_dns.sh
+        src: ~/nexushost.sh
+        dest: /home/ubuntu/nexushost.sh
         owner: ubuntu
         group: ubuntu
         mode: '0755'
