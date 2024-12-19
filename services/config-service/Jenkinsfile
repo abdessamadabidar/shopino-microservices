@@ -53,7 +53,6 @@ pipeline {
                             scp -o StrictHostKeyChecking=no ansible/.ansible.cfg abdessamadabidar@${AnsibleHost}:~/
                             scp -o StrictHostKeyChecking=no nexus_dns.sh abdessamadabidar@${AnsibleHost}:~/
                             scp -o StrictHostKeyChecking=no -r helm-chart/* abdessamadabidar@${AnsibleHost}:~/helm/helm-chart/
-                            scp -o StrictHostKeyChecking=no ./helmfile.yaml abdessamadabidar@${AnsibleHost}:~/helm/
                         """
                     }
                 }
