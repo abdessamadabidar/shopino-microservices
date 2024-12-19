@@ -38,6 +38,8 @@
     - name: Create pull image secret
       ansible.builtin.shell: |
         kubectl create secret docker-registry regcred --docker-server=nexus.local:8083 --docker-username=abdessamadabidar --docker-password=root --docker-email=abdessamad.abidar@outlook.com
+      environment:
+        KUBECONFIG: /home/ubuntu/.kube/config
 
     - name: Run helm chart on EC2 server
       ansible.builtin.shell: |
