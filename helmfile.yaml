@@ -48,7 +48,7 @@ releases:
     chart: ./helm-chart
     values:
       - ./helm-chart/values/services/config-svc-values.yaml
-      - githubPublicAccessToken : {{ requiredEnv "GITHUB_PUBLIC_ACCESS_TOKEN" }}
+      - githubPublicAccessToken : "{{ requiredEnv \"GITHUB_PUBLIC_ACCESS_TOKEN\" }}"
 
   - name: gateway-service
     chart: ./helm-chart
