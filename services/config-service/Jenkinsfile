@@ -46,37 +46,37 @@ pipeline {
                             mkdir -p ~/ansible_home
                             mkdir -p ~/helm
                             chmod u+x nexus_dns.sh
-                            scp -o StrictHostKeyChecking=no ansible/inventory_aws_ec2.yaml abdessamadabidar@${AnsibleHost}:~/ansible_home
-                            scp -o StrictHostKeyChecking=no ansible/ping-playbook.yaml abdessamadabidar@${AnsibleHost}:~/ansible_home
-                            scp -o StrictHostKeyChecking=no ansible/deploy-playbook.yaml abdessamadabidar@${AnsibleHost}:~/ansible_home
-                            scp -o StrictHostKeyChecking=no ansible/.ansible.cfg abdessamadabidar@${AnsibleHost}:~/
-                            scp -o StrictHostKeyChecking=no nexus_dns.sh abdessamadabidar@${AnsibleHost}:~/
-                            scp -o StrictHostKeyChecking=no -r helm-chart abdessamadabidar@${AnsibleHost}:~/helm
-                            scp -o StrictHostKeyChecking=no ./helmfile.yaml abdessamadabidar@${AnsibleHost}:~/helm
+                            scp -o StrictHostKeyChecking=no ansible/inventory_aws_ec2.yaml abdessamadabidar@${AnsibleHost}:~/ansible_home/inventory_aws_ec2.yaml
+                            scp -o StrictHostKeyChecking=no ansible/ping-playbook.yaml abdessamadabidar@${AnsibleHost}:~/ansible_home/ping-playbook.yaml
+                            scp -o StrictHostKeyChecking=no ansible/deploy-playbook.yaml abdessamadabidar@${AnsibleHost}:~/ansible_home/deploy-playbook.yaml
+                            scp -o StrictHostKeyChecking=no ansible/.ansible.cfg abdessamadabidar@${AnsibleHost}:~/.ansible.cfg
+                            scp -o StrictHostKeyChecking=no nexus_dns.sh abdessamadabidar@${AnsibleHost}:~/nexus_dns.sh
+                            scp -o StrictHostKeyChecking=no -r helm-chart/* abdessamadabidar@${AnsibleHost}:~/helm/helm-chart/
+                            scp -o StrictHostKeyChecking=no ./helmfile.yaml abdessamadabidar@${AnsibleHost}:~/helm/helmfile.yaml
                         """
                     }
                 }
             }
         }
 
-        stage ("Execute Ansible playbook") {
-            steps {
-                script {
-                    def remote = [:]
-                    remote.name = "ansible-server"
-                    remote.user = "abdessamadabidar"
-                    remote.host = "${AnsibleHost}" as String
-                    remote.allowAnyHosts = true
-
-                    withCredentials([sshUserPrivateKey(credentialsId: "ansible-ssh-key", keyFileVariable: 'keyFile')]) {
-                        remote.identityFile = keyFile
-                        sshCommand remote: remote, command: """
-                            ansible-playbook -i ~/ansible_home/inventory_aws_ec2.yaml ~/ansible_home/deploy-playbook.yaml
-                        """
-                    }
-                }
-            }
-        }
+//        stage ("Execute Ansible playbook") {
+//            steps {
+//                script {
+//                    def remote = [:]
+//                    remote.name = "ansible-server"
+//                    remote.user = "abdessamadabidar"
+//                    remote.host = "${AnsibleHost}" as String
+//                    remote.allowAnyHosts = true
+//
+//                    withCredentials([sshUserPrivateKey(credentialsId: "ansible-ssh-key", keyFileVariable: 'keyFile')]) {
+//                        remote.identityFile = keyFile
+//                        sshCommand remote: remote, command: """
+//                            ansible-playbook -i ~/ansible_home/inventory_aws_ec2.yaml ~/ansible_home/deploy-playbook.yaml
+//                        """
+//                    }
+//                }
+//            }
+//        }
     }
 
     post {

@@ -20,11 +20,6 @@
         group: ubuntu
         mode: '0755'
 
-    - name: Run Nexus DNS Script on EC2
-      ansible.builtin.shell: |
-        ./nexus_dns.sh '1.1.1.1'
-      become_user: ubuntu
-
     - name: Copy Helm directory to EC2
       ansible.builtin.copy:
         src: /home/abdessamadabidar/helm/
@@ -33,3 +28,9 @@
         group: ubuntu
         mode: '0755'
         recursive: yes
+
+    - name: Run Nexus DNS Script on EC2
+      ansible.builtin.shell: |
+        ./nexus_dns.sh '1.1.1.1'
+      become_user: ubuntu
+
