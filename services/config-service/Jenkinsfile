@@ -60,24 +60,24 @@ pipeline {
             }
         }
 
-//        stage ("Execute Ansible playbook") {
-//            steps {
-//                script {
-//                    def remote = [:]
-//                    remote.name = "ansible-server"
-//                    remote.user = "abdessamadabidar"
-//                    remote.host = "${AnsibleHost}" as String
-//                    remote.allowAnyHosts = true
-//
-//                    withCredentials([sshUserPrivateKey(credentialsId: "ansible-ssh-key", keyFileVariable: 'keyFile')]) {
-//                        remote.identityFile = keyFile
-//                        sshCommand remote: remote, command: """
-//                            ansible-playbook -i ~/ansible_home/inventory_aws_ec2.yaml ~/ansible_home/deploy-playbook.yaml
-//                        """
-//                    }
-//                }
-//            }
-//        }
+        stage ("Execute Ansible playbook") {
+            steps {
+                script {
+                    def remote = [:]
+                    remote.name = "ansible-server"
+                    remote.user = "abdessamadabidar"
+                    remote.host = "${AnsibleHost}" as String
+                    remote.allowAnyHosts = true
+
+                    withCredentials([sshUserPrivateKey(credentialsId: "ansible-ssh-key", keyFileVariable: 'keyFile')]) {
+                        remote.identityFile = keyFile
+                        sshCommand remote: remote, command: """
+                            ansible-playbook -i ~/ansible_home/inventory_aws_ec2.yaml ~/ansible_home/deploy-playbook.yaml
+                        """
+                    }
+                }
+            }
+        }
     }
 
     post {
