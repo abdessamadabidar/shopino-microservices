@@ -37,6 +37,7 @@
 
     - name: Run helm chart on EC2 server
       ansible.builtin.shell: |
+        export GITHUB_PUBLIC_ACCESS_TOKEN="{{ GITHUB_PUBLIC_ACCESS_TOKEN }}"
         cd /home/ubuntu/helm && helmfile sync
       become: true
       environment:
