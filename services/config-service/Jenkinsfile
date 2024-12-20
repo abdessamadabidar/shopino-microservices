@@ -9,11 +9,10 @@ pipeline {
 
     environment {
         IMAGE_VERSION = 'micro-1.0.0'
+        NEXUS_HOST = 'square-flea-eminently.ngrok-free.app'
     }
 
     parameters {
-        string(name: 'NexusHost', defaultValue: 'square-flea-eminently.ngrok-free.app', description: 'Nexus Host where to deploy images and jars')
-        string(name: 'DockerRepositoryPort', defaultValue: '', description: 'Docker Hosted Repository Port')
         string(name: 'AnsibleHost', defaultValue: '0.0.0.0', description: 'Ansible Host where execute deployment tasks')
     }
 
@@ -30,9 +29,9 @@ pipeline {
         stage("build and push Image") {
             steps {
                 script {
-                    dockerLogin "${NexusHost}"
-//                    dockerBuild "${NexusHost}", "${DockerRepositoryPort}", 'config-service', "${IMAGE_VERSION}", 'services/config-service/'
-//                    dockerPush "${NexusHost}", "${DockerRepositoryPort}", 'config-service', "${IMAGE_VERSION}"
+                    dockerLogin "${NEXUS_HOST}"
+                    dockerBuild "${NEXUS_HOST}", 'config-service', "${IMAGE_VERSION}", 'services/config-service/'
+                    dockerPush "${NEXUS_HOST}", 'config-service', "${IMAGE_VERSION}"
                 }
             }
         }
