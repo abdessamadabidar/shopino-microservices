@@ -8,48 +8,47 @@ pipeline {
     }
     environment {
         IMAGE_VERSION = 'micro-1.0.0'
+        NEXUS_HOST = 'square-flea-eminently.ngrok-free.app'
     }
 
     parameters {
-        string(name: 'NexusHost', defaultValue: '0.0.0.0', description: 'Nexus Host where to deploy images and jars')
-        string(name: 'DockerRepositoryPort', defaultValue: '', description: 'Docker Hosted Repository Port')
         string(name: 'AnsibleHost', defaultValue: '0.0.0.0', description: 'Ansible Host where execute deployment tasks')
     }
     stages {
 
-//        stage("build jar") {
+        stage("build jar") {
+            steps {
+                script {
+                    buildJar 'customer-service'
+                }
+            }
+        }
+
+        stage("build and push Image") {
+            steps {
+                script {
+                    dockerLogin "${NEXUS_HOST}"
+                    dockerBuild "${NEXUS_HOST}", 'customer-service', "${IMAGE_VERSION}", 'services/customer-service/'
+                    dockerPush "${NEXUS_HOST}", 'customer-service', "${IMAGE_VERSION}"
+                }
+            }
+        }
+
+//        stage("Copy Resources files to Ansible server") {
 //            steps {
 //                script {
-//                    buildJar 'customer-service'
+//                    copy "${AnsibleHost}"
 //                }
 //            }
 //        }
 //
-//        stage("build and push Image") {
+//        stage ("Execute Ansible playbook") {
 //            steps {
 //                script {
-//                    dockerLogin "${NexusHost}", "${DockerRepositoryPort}"
-//                    dockerBuild "${NexusHost}", "${DockerRepositoryPort}", 'customer-service', "${IMAGE_VERSION}", 'services/customer-service/'
-//                    dockerPush "${NexusHost}", "${DockerRepositoryPort}", 'customer-service', "${IMAGE_VERSION}"
+//                    deploy "${AnsibleHost}", "${NexusHost}"
 //                }
 //            }
 //        }
-
-        stage("Copy Resources files to Ansible server") {
-            steps {
-                script {
-                    copy "${AnsibleHost}"
-                }
-            }
-        }
-
-        stage ("Execute Ansible playbook") {
-            steps {
-                script {
-                    deploy "${AnsibleHost}", "${NexusHost}"
-                }
-            }
-        }
 
     }
 
