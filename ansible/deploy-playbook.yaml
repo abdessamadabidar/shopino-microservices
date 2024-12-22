@@ -35,6 +35,11 @@
         chdir: /home/ubuntu
       become: true
 
+    - name: Clean up Docker system
+      ansible.builtin.shell: |
+        docker system prune -af --volumes
+      become: true
+
     - name: Start minikube cluster on EC2
       ansible.builtin.shell: |
         minikube start
