@@ -76,7 +76,7 @@ pipeline {
                     ]) {
                         remote.identityFile = keyFile
                         sshCommand remote: remote, command: """
-                            ansible-playbook ~/ansible_home/deploy-playbook.yaml --extra-vars "NexusHost=${NexusHost} GITHUB_PUBLIC_ACCESS_TOKEN=${GITHUB_TOKEN}"
+                            ansible-playbook ~/ansible_home/deploy-playbook.yaml --extra-vars "NexusHost=${NEXUS_HOST} GITHUB_PUBLIC_ACCESS_TOKEN=${GITHUB_TOKEN}"
                         """
                     }
                 }
