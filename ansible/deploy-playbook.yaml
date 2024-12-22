@@ -37,7 +37,7 @@
 
     - name: Create pull image secret
       ansible.builtin.shell: |
-        kubectl create secret docker-registry regcred --docker-server=nexus.local:8083 --docker-username=abdessamadabidar --docker-password=root --docker-email=abdessamad.abidar@outlook.com
+        kubectl create secret docker-registry regcred --docker-server=square-flea-eminently.ngrok-free.app --docker-username=abdessamadabidar --docker-password=root --docker-email=abdessamad.abidar@outlook.com
       environment:
         KUBECONFIG: /home/ubuntu/.kube/config
 
