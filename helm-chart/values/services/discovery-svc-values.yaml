@@ -2,7 +2,7 @@ applicationName: discovery-service
 
 applicationReplicas: 1
 
-imageName: nexus.local:8083/discovery-service
+imageName: square-flea-eminently.ngrok-free.app/discovery-service
 
 imageVersion: micro-1.0.0
 

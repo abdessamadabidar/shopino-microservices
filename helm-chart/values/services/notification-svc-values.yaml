@@ -6,7 +6,7 @@ applicationReplicas: 1
 
 containerPort: 8085
 
-imageName: nexus.local:8083/notification-service
+imageName: square-flea-eminently.ngrok-free.app/notification-service
 
 imageVersion: micro-1.0.0
 

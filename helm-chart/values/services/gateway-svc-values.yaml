@@ -2,7 +2,7 @@ applicationName: gateway-service
 
 applicationReplicas: 1
 
-imageName: nexus.local:8083/gateway-service
+imageName: square-flea-eminently.ngrok-free.app/gateway-service
 
 imageVersion: micro-1.0.0
 

@@ -6,7 +6,7 @@ applicationReplicas: 1
 
 containerPort: 8084
 
-imageName: nexus.local:8083/payment-service
+imageName: square-flea-eminently.ngrok-free.app/payment-service
 
 imageVersion: micro-1.0.0
 
