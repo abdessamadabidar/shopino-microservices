@@ -58,7 +58,7 @@
     <distributionManagement>
         <snapshotRepository>
             <id>shopino-microservices-snapshots</id>
-            <url>http://square-flea-eminently.ngrok-free.app/repository/shopino-microservices-snapshots/</url>
+            <url>https://square-flea-eminently.ngrok-free.app/repository/shopino-microservices-snapshots/</url>
         </snapshotRepository>
     </distributionManagement>
 </project>
