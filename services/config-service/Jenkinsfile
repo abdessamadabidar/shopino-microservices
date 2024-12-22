@@ -42,7 +42,7 @@ pipeline {
                 script {
                     sshagent(['ansible-ssh-key']) {
                         sh """
-                            ssh abdessamadabidar@${AnsibleHost} 'mkdir -p ~/ansible_home ~/helm/helm-chart/'
+                            ssh -o StrictHostKeyChecking=no abdessamadabidar@${AnsibleHost} 'mkdir -p ~/ansible_home ~/helm/helm-chart/'
                         """
                         sh """
                             chmod u+x nexushost.sh
