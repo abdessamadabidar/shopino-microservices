@@ -40,13 +40,13 @@
         docker system prune -af --volumes
       become: true
 
-    - name: Start minikube cluster on EC2
-      ansible.builtin.shell: |
-        minikube start
-      environment:
-        KUBECONFIG: /home/ubuntu/.kube/config
-      become: true
-      become_user: ubuntu
+#    - name: Start minikube cluster on EC2
+#      ansible.builtin.shell: |
+#        minikube start
+#      environment:
+#        KUBECONFIG: /home/ubuntu/.kube/config
+#      become: true
+#      become_user: ubuntu
 
     - name: Create pull image secret
       ansible.builtin.shell: |
