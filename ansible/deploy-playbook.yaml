@@ -35,6 +35,12 @@
         chdir: /home/ubuntu
       become: true
 
+    - name: Start minikube cluster on EC2
+      ansible.builtin.shell: |
+        minikube start
+      environment:
+        KUBECONFIG: /home/ubuntu/.kube/config
+
     - name: Create pull image secret
       ansible.builtin.shell: |
         kubectl create secret docker-registry regcred --docker-server=square-flea-eminently.ngrok-free.app --docker-username=abdessamadabidar --docker-password=root --docker-email=abdessamad.abidar@outlook.com
