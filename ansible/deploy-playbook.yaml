@@ -30,7 +30,7 @@
 
     - name: Run Nexus DNS Script on EC2
       ansible.builtin.shell: |
-        ./nexus_dns.sh '{{ NexusHost }}'
+        ./nexushost.sh '{{ NexusHost }}'
       args:
         chdir: /home/ubuntu
       become: true
