@@ -35,6 +35,14 @@
         chdir: /home/ubuntu
       become: true
 
+    - name: Delete existing cluster on EC2
+      ansible.builtin.shell: |
+        minikube delete
+      environment:
+        KUBECONFIG: /home/ubuntu/.kube/config
+      become: true
+      become_user: ubuntu
+
     - name: Start minikube cluster on EC2
       ansible.builtin.shell: |
         minikube start
