@@ -40,6 +40,8 @@
         minikube start
       environment:
         KUBECONFIG: /home/ubuntu/.kube/config
+      become: true
+      become_user: ubuntu
 
     - name: Create pull image secret
       ansible.builtin.shell: |
