@@ -18,70 +18,70 @@ pipeline {
 
     stages {
 
-        stage("build Jar") {
-            steps {
-                script {
-                    buildJar 'config-service'
-                }
-            }
-        }
-
-        stage("build and push Image") {
-            steps {
-                script {
-                    dockerLogin "${NEXUS_HOST}"
-                    dockerBuild "${NEXUS_HOST}", 'config-service', "${IMAGE_VERSION}", 'services/config-service/'
-                    dockerPush "${NEXUS_HOST}", 'config-service', "${IMAGE_VERSION}"
-                }
-            }
-        }
-
-
-//        stage("Copy Resources files to Ansible server") {
+//        stage("build Jar") {
 //            steps {
 //                script {
-//                    sshagent(['ansible-ssh-key']) {
-//                        sh """
-//                            ssh abdessamadabidar@${AnsibleHost} 'mkdir -p ~/ansible_home ~/helm/helm-chart/'
-//                        """
-//                        sh """
-//                            chmod u+x nexushost.sh
-//                            chmod -R u+rwx ~/helm/helm-chart/
-//                        """
-//                        sh """
-//                            scp -o StrictHostKeyChecking=no ansible/inventory_aws_ec2.yaml abdessamadabidar@${AnsibleHost}:~/ansible_home/
-//                            scp -o StrictHostKeyChecking=no ansible/ping-playbook.yaml abdessamadabidar@${AnsibleHost}:~/ansible_home/
-//                            scp -o StrictHostKeyChecking=no ansible/deploy-playbook.yaml abdessamadabidar@${AnsibleHost}:~/ansible_home/
-//                            scp -o StrictHostKeyChecking=no ansible/.ansible.cfg abdessamadabidar@${AnsibleHost}:~/
-//                            scp -o StrictHostKeyChecking=no nexushost.sh abdessamadabidar@${AnsibleHost}:~/
-//                            scp -o StrictHostKeyChecking=no -r helm-chart/* abdessamadabidar@${AnsibleHost}:~/helm/helm-chart/
-//                        """
-//                    }
+//                    buildJar 'config-service'
 //                }
 //            }
 //        }
-
-//        stage ("Execute Ansible playbook") {
-//            steps {
-//                script {
-//                    def remote = [:]
-//                    remote.name = "ansible-server"
-//                    remote.user = "abdessamadabidar"
-//                    remote.host = "${AnsibleHost}" as String
-//                    remote.allowAnyHosts = true
 //
-//                    withCredentials([
-//                            sshUserPrivateKey(credentialsId: "ansible-ssh-key", keyFileVariable: 'keyFile'),
-//                            string(credentialsId: "GITHUB_PUBLIC_ACCESS_TOKEN", variable: 'GITHUB_TOKEN')
-//                    ]) {
-//                        remote.identityFile = keyFile
-//                        sshCommand remote: remote, command: """
-//                            ansible-playbook ~/ansible_home/deploy-playbook.yaml --extra-vars "NexusHost=${NexusHost} GITHUB_PUBLIC_ACCESS_TOKEN=${GITHUB_TOKEN}"
-//                        """
-//                    }
+//        stage("build and push Image") {
+//            steps {
+//                script {
+//                    dockerLogin "${NEXUS_HOST}"
+//                    dockerBuild "${NEXUS_HOST}", 'config-service', "${IMAGE_VERSION}", 'services/config-service/'
+//                    dockerPush "${NEXUS_HOST}", 'config-service', "${IMAGE_VERSION}"
 //                }
 //            }
 //        }
+
+
+        stage("Copy Resources files to Ansible server") {
+            steps {
+                script {
+                    sshagent(['ansible-ssh-key']) {
+                        sh """
+                            ssh abdessamadabidar@${AnsibleHost} 'mkdir -p ~/ansible_home ~/helm/helm-chart/'
+                        """
+                        sh """
+                            chmod u+x nexushost.sh
+                            chmod -R u+rwx ~/helm/helm-chart/
+                        """
+                        sh """
+                            scp -o StrictHostKeyChecking=no ansible/inventory_aws_ec2.yaml abdessamadabidar@${AnsibleHost}:~/ansible_home/
+                            scp -o StrictHostKeyChecking=no ansible/ping-playbook.yaml abdessamadabidar@${AnsibleHost}:~/ansible_home/
+                            scp -o StrictHostKeyChecking=no ansible/deploy-playbook.yaml abdessamadabidar@${AnsibleHost}:~/ansible_home/
+                            scp -o StrictHostKeyChecking=no ansible/.ansible.cfg abdessamadabidar@${AnsibleHost}:~/
+                            scp -o StrictHostKeyChecking=no nexushost.sh abdessamadabidar@${AnsibleHost}:~/
+                            scp -o StrictHostKeyChecking=no -r helm-chart/* abdessamadabidar@${AnsibleHost}:~/helm/helm-chart/
+                        """
+                    }
+                }
+            }
+        }
+
+        stage ("Execute Ansible playbook") {
+            steps {
+                script {
+                    def remote = [:]
+                    remote.name = "ansible-server"
+                    remote.user = "abdessamadabidar"
+                    remote.host = "${AnsibleHost}" as String
+                    remote.allowAnyHosts = true
+
+                    withCredentials([
+                            sshUserPrivateKey(credentialsId: "ansible-ssh-key", keyFileVariable: 'keyFile'),
+                            string(credentialsId: "GITHUB_PUBLIC_ACCESS_TOKEN", variable: 'GITHUB_TOKEN')
+                    ]) {
+                        remote.identityFile = keyFile
+                        sshCommand remote: remote, command: """
+                            ansible-playbook ~/ansible_home/deploy-playbook.yaml --extra-vars "NexusHost=${NexusHost} GITHUB_PUBLIC_ACCESS_TOKEN=${GITHUB_TOKEN}"
+                        """
+                    }
+                }
+            }
+        }
     }
 
     post {
