@@ -35,18 +35,13 @@
         chdir: /home/ubuntu
       become: true
 
-    - name: Clean up Docker system
+    - name: Start minikube cluster on EC2
       ansible.builtin.shell: |
-        docker system prune -af --volumes
+        minikube start
+      environment:
+        KUBECONFIG: /home/ubuntu/.kube/config
       become: true
-
-#    - name: Start minikube cluster on EC2
-#      ansible.builtin.shell: |
-#        minikube start
-#      environment:
-#        KUBECONFIG: /home/ubuntu/.kube/config
-#      become: true
-#      become_user: ubuntu
+      become_user: ubuntu
 
     - name: Create pull image secret
       ansible.builtin.shell: |
